@@ -1,4 +1,20 @@
-Import-Module ./Crescendo/SNMP.psd1 -Force
+#region disk usage
+$DiskSize =  (snmpwalk -v2c -c public 172.16.115.152 '.1.3.6.1.2.1.25.2.3.1.5.1').Split(' ')[-1]
+$DiskUsed = (snmpwalk -v2c -c public 172.16.115.152 '.1.3.6.1.2.1.25.2.3.1.6.1').Split(' ')[-1]
+
+$usedPercent = [math]::Round(($DiskUsed / $DiskSize),2) * 100
+$available = 100 - $usedPercent
+
+[pscustomobject]@{
+    Used = "$usedPercent GB"
+    Free = "$available GB"
+}
+#endregion
+
+#region server uptime
+snmpwalk -v2c -c public  -On 172.16.115.152 1.3.6.1.2.1.25.1
+#endregion
+
 #region printer demo things
 
 #Drum Unit life
@@ -9,8 +25,4 @@ $lifeRemaining = (Start-Snmpwalk -Version 1 -Community public -Target 192.168.1.
 $totalCapacity = (Start-Snmpwalk -Version 1 -Community public -Target 192.168.1.20 -oid $capacity)
 
 ([Math]::Round(($lifeRemaining.Value / $totalCapacity.value),2)) * 100
-#endregion
-
-#region server uptime
-$serverUptime = snmpwalk -v1 -c public 172.16.115.144 1.3.6.1.2.1.1.3.0
 #endregion
