@@ -22,7 +22,7 @@ scrape_configs:
   - job_name: "prometheus"
     scheme: "https"
     tls_config:
-      ca_file: "C:\\prometheus\\cert\\cert.cer"
+      ca_file: "C:\\cert\\cert.cer"
     static_configs:
       - targets: ["prometheus.steviecoaster.dev:9090"]
 
