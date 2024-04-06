@@ -6,8 +6,8 @@ $usedPercent = [math]::Round(($DiskUsed / $DiskSize),2) * 100
 $available = 100 - $usedPercent
 
 [pscustomobject]@{
-    Used = "$usedPercent GB"
-    Free = "$available GB"
+    Used = "$usedPercent %"
+    Free = "$available %"
 }
 #endregion
 
@@ -15,7 +15,7 @@ $available = 100 - $usedPercent
 snmpwalk -v2c -c public  -On 172.16.115.152 1.3.6.1.2.1.25.1
 #endregion
 
-#region printer demo things
+#region printer demo things. Skip running cause this won't work due to network constraints.
 
 #Drum Unit life
 $remaining = '.1.3.6.1.2.1.43.11.1.1.9.1.2'

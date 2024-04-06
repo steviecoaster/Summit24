@@ -5,3 +5,4 @@
 1. Install & Configure Snmp-exporter
 1. Install & Configure WMI-Exporter
 1. Install & Configure Grafana
+1. Build a Dashboard
