@@ -6,3 +6,6 @@ Remove-Item 'C:\snmp_exporter\snmp_exporter-0.25.0.windows-amd64' -recurse -Forc
 Push-Location 'C:\snmp_exporter'
 & 'C:\snmp_exporter\snmp_exporter.exe' --config.file="C:\snmp_exporter\snmp.yml"
 Pop-Location
+
+#Install as a service
+nssm install snmp_exporter
