@@ -262,6 +262,7 @@ $($Table)
 
     }
 }
+
 $Data | ConvertTo-PrettiertHtml | Out-File ./SoftwareReport.html -Force ; ii .
 
 $Data | ConvertTo-Html -Property DisplayName -Title 'Installed Software Report' | Out-File .\SoftwareReport.html -Force
