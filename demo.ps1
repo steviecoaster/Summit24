@@ -1,6 +1,6 @@
 #region disk usage
-$DiskSize =  (snmpwalk -v2c -c public 172.16.115.152 '.1.3.6.1.2.1.25.2.3.1.5.1').Split(' ')[-1]
-$DiskUsed = (snmpwalk -v2c -c public 172.16.115.152 '.1.3.6.1.2.1.25.2.3.1.6.1').Split(' ')[-1]
+$DiskSize =  (snmpwalk -v2c -c public 172.16.115.160 '.1.3.6.1.2.1.25.2.3.1.5.1').Split(' ')[-1]
+$DiskUsed = (snmpwalk -v2c -c public 172.16.115.160 '.1.3.6.1.2.1.25.2.3.1.6.1').Split(' ')[-1]
 
 $usedPercent = [math]::Round(($DiskUsed / $DiskSize),2) * 100
 $available = 100 - $usedPercent
@@ -12,7 +12,7 @@ $available = 100 - $usedPercent
 #endregion
 
 #region server uptime
-snmpwalk -v2c -c public  -On 172.16.115.152 1.3.6.1.2.1.25.1
+snmpwalk -v2c -c public  -On 172.16.115.160 1.3.6.1.2.1.25.1
 #endregion
 
 #region printer demo things. Skip running cause this won't work due to network constraints.

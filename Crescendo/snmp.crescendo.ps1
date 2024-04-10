@@ -39,6 +39,10 @@ $snmpwalk.OutputHandlers = $OutputHandler
 
 #Produce the json schema file
 $snmpwalk | Export-CrescendoCommand
+
+#Produce the module and load it
+Export-CrescendoModule -ConfigurationFile ./Start-Snmpwalk.crescendo.json -ModuleName SNMP
+Import-Module ./SNMP.psd1 -Force
 #endregion
 
 #region snmpbulkwalk command
@@ -86,7 +90,7 @@ Export-CrescendoCommand -Command $snmpbulkwalk
 Start-Snmpwalk -Version 1 -Community public -Target chocoserver.steviecoaster.dev -Oid .1.3.6.1.2.1.25.6.3.1.2
 
 #Use the data in interesting ways
-$Data = Start-Snmpwalk -Version 1 -Community public -Target chocoserver.steviecoaster.dev -Oid .1.3.6.1.2.1.25.6.3.1.2 |
+Start-Snmpwalk -Version 1 -Community public -Target chocoserver.steviecoaster.dev -Oid .1.3.6.1.2.1.25.6.3.1.2 |
 Select-Object @{Name = 'DisplayName'; Expression = { $_.Value -replace '"',''}}
 
 #Cheeky lil function
@@ -263,8 +267,11 @@ $($Table)
     }
 }
 
-$Data | ConvertTo-PrettiertHtml | Out-File ./SoftwareReport.html -Force ; ii .
+Start-Snmpwalk -Version 1 -Community public -Target chocoserver.steviecoaster.dev -Oid .1.3.6.1.2.1.25.6.3.1.2 |
+Select-Object @{Name = 'DisplayName'; Expression = { $_.Value -replace '"',''}} |
+ConvertTo-PrettiertHtml |
+Out-File ./SoftwareReport.html -Force ; Invoke-Item .
 
-$Data | ConvertTo-Html -Property DisplayName -Title 'Installed Software Report' | Out-File .\SoftwareReport.html -Force
+#$Data | ConvertTo-Html -Property DisplayName -Title 'Installed Software Report' | Out-File .\SoftwareReport.html -Force
 
 #endregion
